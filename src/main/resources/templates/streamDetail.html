@@ -34,7 +34,8 @@
             console.log('Connected: ' + frame);
             // 서버에서 메시지를 수신할 때 호출될 함수를 등록합니다.
             stompClient.subscribe(subscribeUrl, function(response) {
-                showMessage(JSON.parse(response.body).content);
+                parsedData = JSON.parse(response.body);
+                showMessage(parsedData.userId + " : " + parsedData.content);
             });
         });
     }
@@ -49,11 +50,15 @@
 
     // 서버로 메시지를 전송하는 함수
     function sendMessage() {
-        sendMessageUrl = "/sendMessage/" + streamId
-        console.log(sendMessageUrl);
-        console.log("/sendMessage/1");
+        sendMessageUrl = "/sendChat/" + streamId
         var messageContent = $('#messageInput').val();
-        stompClient.send(sendMessageUrl, {}, JSON.stringify({'content': messageContent}));
+        var userId = 1
+        messageForm = {
+            'userId' : userId,
+            'content' : messageContent
+        };
+        resultMessage = JSON.stringify(messageForm);
+        stompClient.send(sendMessageUrl, {}, resultMessage);
     }
 
     // 화면에 메시지를 표시하는 함수

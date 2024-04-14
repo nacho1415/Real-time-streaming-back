@@ -1,7 +1,7 @@
 package com.example.realtimestreaming.Service;
 
 import com.example.realtimestreaming.Domain.User;
-import com.example.realtimestreaming.Dto.User.SignupDto;
+import com.example.realtimestreaming.Dto.Request.User.SignupDto;
 import com.example.realtimestreaming.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

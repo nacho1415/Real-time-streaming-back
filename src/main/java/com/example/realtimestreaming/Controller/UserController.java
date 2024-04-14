@@ -1,7 +1,7 @@
 package com.example.realtimestreaming.Controller;
 
 import com.example.realtimestreaming.Domain.User;
-import com.example.realtimestreaming.Dto.User.SignupDto;
+import com.example.realtimestreaming.Dto.Request.User.SignupDto;
 import com.example.realtimestreaming.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

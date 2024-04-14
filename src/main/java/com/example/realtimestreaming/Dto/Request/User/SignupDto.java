@@ -1,4 +1,4 @@
-package com.example.realtimestreaming.Dto.User;
+package com.example.realtimestreaming.Dto.Request.User;
 
 import lombok.Data;
 
