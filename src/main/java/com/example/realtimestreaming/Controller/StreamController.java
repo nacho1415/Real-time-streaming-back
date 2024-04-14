@@ -1,5 +1,8 @@
 package com.example.realtimestreaming.Controller;
 
+import com.example.realtimestreaming.Dto.Request.Stream.SendChatReq;
+import com.example.realtimestreaming.Service.StreamService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -19,16 +22,19 @@ public class StreamController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private StreamService streamService;
+
     @GetMapping("/{streamId}")
     public String getStreamDetail() {
         return "streamDetail.html";
     }
 
-    @MessageMapping("/sendMessage/{projectId}")
-    public void sendMessage(String message, @DestinationVariable String projectId) {
-        System.out.println("받았는지 확인");
-        String destination = "/stream/" + projectId;
-        this.messagingTemplate.convertAndSend(destination, message);
+    @MessageMapping("/sendChat/{streamId}")
+    public void sendChat(SendChatReq sendChatReq, @DestinationVariable("streamId") Long streamId) {
+//        Long parsedStreamId = Long.parseLong(streamId);
+        streamService.sendMessage(sendChatReq, streamId);
+        String destination = "/stream/" + streamId;
+        this.messagingTemplate.convertAndSend(destination, sendChatReq);
     }
-
 }
