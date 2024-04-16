@@ -18,10 +18,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/stream")
@@ -44,11 +41,16 @@ public class StreamController {
     @PostMapping("/sendChat/{streamId}")
     public void swaggerSendChat(@RequestBody SendChatReq sendChatReq, @DestinationVariable("streamId") Long streamId) {
 //        Long parsedStreamId = Long.parseLong(streamId);
+        System.out.println("12321");
         streamService.sendMessage(sendChatReq, streamId);
         String destination = "/stream/" + streamId;
         this.messagingTemplate.convertAndSend(destination, sendChatReq);
     }
 
+    @GetMapping("/{streamId}")
+    public String getStreamDetail(@PathVariable Long streamId) {
+        return "streamDetail"; // 이 경우에는 Thymeleaf나 Freemarker 등의 템플릿 엔진이 경로를 처리합니다.
+    }
 
     @Operation(summary = "프로젝트 디테일 조회")
     @ApiResponses(value = {
